@@ -1,4 +1,9 @@
 name: Welcome New Contributor
+
+permissions:
+  issues: write   # permite crear comentarios
+  contents: read  # para checkout si lo necesitas
+
 on:
   issues:
     types: [opened]
@@ -12,7 +17,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // usa github.rest en lugar de github.issues
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
