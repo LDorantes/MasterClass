@@ -1,4 +1,4 @@
-# \Masterclass "De 0 a 100 en GitHub: Proyectos, Issues y CI/CD en Acción"
+# Masterclass "De 0 a 100 en GitHub: Proyectos, Issues y CI/CD en Acción"
 
 Bienvenido al repositorio de la Masterclass diseñada para llevar tu flujo de trabajo en GitHub de cero a cien en 20 minutos.
 
