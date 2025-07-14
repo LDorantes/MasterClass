@@ -12,34 +12,38 @@ jobs:
   welcome:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug context.issue
+        uses: actions/github-script@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            console.log("Issue payload:", JSON.stringify(context.payload.issue, null, 2));
+
       - name: Comentar bienvenida
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const creator = context.payload.issue.user.login;
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `¡Hola @${creator}! Gracias por tu contribución a esta master class. Nuestro equipo revisará tu issue pronto. 🚀`
+              body: `¡Hola @${creator}! Gracias por tu contribución, en breve revisamos. 🚀`
             });
 
-      - name: Publicar mini-tutorial de Actions
+      - name: Publicar mini-tutorial
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `
-**¿Quieres ver cómo funciona esta Action?**  
-1. Cada vez que creas un issue, se dispara este flujo.  
-2. El paso **Comentar bienvenida** usa \`github-script\` para invocar la API y dejar un comment.  
-3. Ahora mismo estoy añadiendo este comentario como **PASO ADICIONAL**, demostrando cómo encadenar múltiples comentarios.
-
-_— Explora \`.github/workflows/welcome.yml\` y verás los pasos definidos bajo \`jobs.welcome.steps\`._
-              `
+              body: `**¿Cómo funciona?**  
+- Este flujo corre al crear un issue.  
+- Paso 1: debug del payload.  
+- Paso 2: comentario de bienvenida.  
+- Paso 3: este mini-tutorial.`
             });
